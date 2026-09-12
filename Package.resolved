@@ -1,0 +1,15 @@
+{
+  "originHash" : "cf8458eafe9b85f933e7385f25d743519a385d4a9f4a39294cadc62a8451579f",
+  "pins" : [
+    {
+      "identity" : "swordkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/orbeavers14/SwordKit.git",
+      "state" : {
+        "revision" : "998ce4ae81def645a7c2d53053efc8866dc95daa",
+        "version" : "0.6.1"
+      }
+    }
+  ],
+  "version" : 3
+}

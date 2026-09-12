@@ -22,8 +22,9 @@ licensed content. It does not contain a UI or a SWORD engine dependency.
    - Read, search, availability, and download lifecycle APIs.
 
 3. `BibleKitSword` adapter
-   - Optional package product depending on tagged SwordKit.
-   - Map SWORD catalogs and module capabilities into BibleKit descriptors.
+   - [x] Optional package product depending on tagged SwordKit.
+   - [x] Map SWORD catalogs and module capabilities into BibleKit descriptors.
+   - Expose provider-scoped reading, searching, and module lifecycle actions.
 
 4. Authorized and custom feed providers
    - HTTPS feed contract, trust policy, attribution display requirements, and

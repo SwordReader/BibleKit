@@ -18,6 +18,13 @@ let package = Package(
             name: "BibleKit",
             targets: ["BibleKit"]
         ),
+        .library(
+            name: "BibleKitSword",
+            targets: ["BibleKitSword"]
+        ),
+    ],
+    dependencies: [
+        .package(url: "https://github.com/orbeavers14/SwordKit.git", from: "0.6.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -25,9 +32,23 @@ let package = Package(
         .target(
             name: "BibleKit"
         ),
+        .target(
+            name: "BibleKitSword",
+            dependencies: [
+                "BibleKit",
+                .product(name: "SwordKit", package: "SwordKit"),
+            ]
+        ),
         .testTarget(
             name: "BibleKitTests",
             dependencies: ["BibleKit"]
+        ),
+        .testTarget(
+            name: "BibleKitSwordTests",
+            dependencies: [
+                "BibleKitSword",
+                .product(name: "SwordKit", package: "SwordKit"),
+            ]
         ),
     ],
     swiftLanguageModes: [.v6]
