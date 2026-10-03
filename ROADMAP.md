@@ -3,7 +3,8 @@
 BibleKit is the provider-agnostic domain framework for Bible, study, and
 licensed content. Its core contains neither UI nor a SWORD engine dependency.
 
-Reviewed October 3, 2026 through `8b2fc99` (tag `0.3.2`). The core is engine-free;
+Reviewed October 3, 2026 through `318aad3`; the current code tag is `0.3.2`.
+The core is engine-free;
 the optional `BibleKitSword` product depends on SwordKit.
 
 ## Principles
@@ -77,8 +78,9 @@ the optional `BibleKitSword` product depends on SwordKit.
   catalog presentation. SwordReader owns scenes, product navigation, storage,
   Apple Watch transfer, Handoff, reminders, and release settings.
 - Navigation/search contracts are implemented; general availability/lifecycle
-  contracts are still pending. Validate those boundaries while replacing SwordReader's
-  ScriptureService. Preserve rich footnotes, lexical attributes, and cross
+  contracts are still pending. SwordReader's baseline service migration is merged;
+  validate those boundaries during future extensions. Preserve rich footnotes,
+  lexical attributes, and cross
   references during that migration rather than reducing them to plain strings.
 - Extract reader typography/rendering into BibleUI after those contracts are
   tested; then migrate library/catalog components. Validate macOS, iOS, and
