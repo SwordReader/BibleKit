@@ -1,7 +1,10 @@
 # BibleKit Roadmap
 
 BibleKit is the provider-agnostic domain framework for Bible, study, and
-licensed content. It does not contain a UI or a SWORD engine dependency.
+licensed content. Its core contains neither UI nor a SWORD engine dependency.
+
+Reviewed October 3, 2026 through `8b2fc99` (tag `0.3.2`). The core is engine-free;
+the optional `BibleKitSword` product depends on SwordKit.
 
 ## Principles
 
@@ -13,28 +16,39 @@ licensed content. It does not contain a UI or a SWORD engine dependency.
 ## Ordered milestones
 
 1. Core catalog and provider contracts
-   - Content descriptors, capabilities, licensing, attribution, and provider IDs.
-   - Async provider catalog protocol and in-memory test provider.
+   - [x] Content descriptors, capabilities, licensing, attribution, and provider IDs.
+   - [x] Async provider catalog protocol and test-provider coverage.
 
 2. Unified reading contracts
    - [x] Separate verse and keyed-entry locations with provider-native resolution.
    - [x] Optional reading protocol with text, XHTML, attribution, and cancellation.
-   - Chapter/passage navigation and ordered keyed-entry navigation.
-   - Search, availability, and download lifecycle APIs.
+   - [x] Provider-native book/chapter and ordered keyed-entry navigation contracts.
+   - [x] Attributed chapter content with headings, footnotes, and cross references.
+   - [x] Search modes, scope, scores, and progress contracts.
+   - [x] Provider-neutral parallel rows and word-link values.
+   - [ ] General passage API and provider-neutral availability/download lifecycle.
 
 3. `BibleKitSword` adapter
    - [x] Optional package product depending on tagged SwordKit.
    - [x] Map SWORD catalogs and module capabilities into BibleKit descriptors.
    - [x] Read individual Bible verses and keyed entries off the main thread.
-   - Expose searching, navigation, and module lifecycle actions.
+   - [x] Expose searching, navigation, and parallel chapter comparison.
+   - [x] Local/remote catalog inspection, installation, removal, and refresh.
+   - [x] User-selected archive installation for paired module delivery.
+   - [ ] Make module lifecycle contracts reusable beyond the SWORD adapter;
+     current repository/progress parameters remain SwordKit-specific.
 
 4. Authorized and custom feed providers
-   - HTTPS feed contract, trust policy, attribution display requirements, and
-     per-provider cache/download restrictions.
+   - [x] Validated read-only HTTPS JSON snapshot feeds with ordered locations.
+   - [x] Explicit load, bounded input, no redirects, no credential-bearing URLs,
+     ephemeral transport, and documented attribution/storage responsibilities.
+   - [ ] Authenticated publisher adapters, negotiated permissions/entitlements,
+     and provider-specific cache/download policies. No publisher access is implied.
 
 5. Consumer integration
-   - Migrate SwordReader from direct SwordKit use to BibleKit and the optional
-     SWORD adapter, preserving existing offline behavior.
+   - [ ] Merge the separately developed SwordReader service migration and validate
+     macOS, iOS, and Watch behavior without losing existing offline/rich content.
+   - [ ] Document public provider/adapter usage and compatibility policy in full.
 
 ## Extraction ownership and sequence
 
@@ -45,7 +59,8 @@ licensed content. It does not contain a UI or a SWORD engine dependency.
 - BibleUI owns reusable reader rendering, typography, content selection, and
   catalog presentation. SwordReader owns scenes, product navigation, storage,
   Apple Watch transfer, Handoff, reminders, and release settings.
-- Add navigation/availability contracts before replacing SwordReader's
+- Navigation/search contracts are implemented; general availability/lifecycle
+  contracts are still pending. Validate those boundaries while replacing SwordReader's
   ScriptureService. Preserve rich footnotes, lexical attributes, and cross
   references during that migration rather than reducing them to plain strings.
 - Extract reader typography/rendering into BibleUI after those contracts are
