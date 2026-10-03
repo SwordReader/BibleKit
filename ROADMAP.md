@@ -48,8 +48,11 @@ the optional `BibleKitSword` product depends on SwordKit.
      and provider-specific cache/download policies. No publisher access is implied.
 
 5. Consumer integration
-   - [ ] Merge the separately developed SwordReader service migration and validate
-     macOS, iOS, and Watch behavior without losing existing offline/rich content.
+   - [x] SwordReader service and Watch migration merged in PR #16; macOS tests
+     and generic iOS/watchOS builds passed locally and on GitHub. Real ASV tests
+     verify adapter reading, chapter, navigation, and search fidelity.
+   - [ ] Complete running-app/device acceptance of offline, rich content,
+     module transfer, and continuity behavior after migration.
    - [x] Document baseline provider/adapter usage, feed policy, integration checks,
      and pre-1.0 compatibility policy. Future contracts require additional docs.
 
