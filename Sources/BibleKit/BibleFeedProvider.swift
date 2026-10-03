@@ -84,6 +84,15 @@ public struct BibleFeedProvider: BibleReadingProvider {
                                    text: entry.text, html: entry.html, license: descriptor.license)
     }
 
+    /// Returns this snapshot's entry order for a content item.
+    public func locations(contentID: BibleContentID) async throws -> [BibleReadingLocation] {
+        try Task.checkCancellation()
+        guard feed.contents.contains(where: { $0.contentID == contentID }) else {
+            throw BibleReadingError.contentNotFound(contentID)
+        }
+        return feed.entries.filter { $0.contentID == contentID }.map(\.location)
+    }
+
     /// Fetches explicitly requested HTTPS JSON without cookies, credentials,
     /// redirects, or persistent URL caching. Publishers needing authentication
     /// can supply decoded snapshots through `init(feed:)` from their own client.

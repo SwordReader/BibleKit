@@ -17,6 +17,7 @@ private func exampleFeed(entries: [BibleFeedEntry]? = nil, version: Int = 1) -> 
     let provider = try BibleFeedProvider(feed: JSONDecoder().decode(BibleJSONFeed.self, from: data))
     let catalog = try await provider.catalog()
     #expect(catalog[0].capabilities == .read)
+    #expect(try await provider.locations(contentID: catalog[0].contentID) == [.keyedEntry("day-1")])
     let content = try await provider.read(contentID: catalog[0].contentID, at: .keyedEntry("day-1"))
     #expect(content.text == "Reading")
     #expect(content.license.attribution == "Example Publisher")
