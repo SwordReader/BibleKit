@@ -5,6 +5,18 @@ import SwordKit
 public enum SwordProviderError: Error, Sendable { case installerNotConfigured }
 
 extension SwordContentProvider: BibleParallelProvider {
+    public func refresh() async throws {
+        try await runNative { self.library.refresh() }
+    }
+
+    /// Installs a user-selected archive, such as a paired Watch transfer.
+    public func install(contentID: BibleContentID, fromArchive archive: URL) async throws {
+        guard let installer else { throw SwordProviderError.installerNotConfigured }
+        try await runNative {
+            try installer.install(moduleNamed: contentID.rawValue, fromArchive: archive)
+            self.library.refresh()
+        }
+    }
     /// Inspects a local catalog without installing content.
     public func localCatalog(at directory: URL) async throws -> [BibleContentDescriptor] {
         try await runNative {
