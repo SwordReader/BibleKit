@@ -56,6 +56,17 @@ the optional `BibleKitSword` product depends on SwordKit.
    - [x] Document baseline provider/adapter usage, feed policy, integration checks,
      and pre-1.0 compatibility policy. Future contracts require additional docs.
 
+6. Read Aloud content support
+   - [ ] Supply ordered, provider-neutral narration text and resolved reading
+     locations for Scripture and keyed entries, preserving language and attribution.
+   - [ ] Define predictable treatment of verse numbers, headings, footnotes,
+     markup, and entry/chapter boundaries without coupling to an Apple speech API.
+   - [ ] Review provider-specific permission requirements for local narration;
+     do not infer rights to synthesize, save, cache, or export audio from reading
+     capability alone. Model restrictions explicitly where needed.
+   - [ ] Test narration text and location mapping with SWORD and custom-feed
+     providers; keep playback, voice preferences, audio sessions, and Siri in apps.
+
 ## Extraction ownership and sequence
 
 - ModernSwordAPI owns native engine maintenance; SwordKit owns its Swift bridge,
