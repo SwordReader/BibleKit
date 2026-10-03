@@ -25,3 +25,15 @@ import Testing
     }
     await #expect(throws: CancellationError.self) { try await task.value }
 }
+
+@Test func moduleManagementRequiresConfiguredInstaller() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let provider = SwordContentProvider(library: try SwordLibrary(directory: directory))
+    await #expect(throws: SwordProviderError.self) {
+        try await provider.remove(contentID: BibleContentID(rawValue: "missing"))
+    }
+    #expect(try await provider.localCatalog(at: directory).isEmpty)
+    #expect(try await provider.parallelChapter(reference: "John 3", contentIDs: []).isEmpty)
+}

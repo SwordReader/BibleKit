@@ -26,6 +26,7 @@ public enum BibleContentKind: String, CaseIterable, Codable, Sendable {
     case devotional
     case generalBook
     case readingPlan
+    case other
 }
 
 /// Actions that a provider permits for a content item.

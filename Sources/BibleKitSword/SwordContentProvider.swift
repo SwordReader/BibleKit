@@ -9,14 +9,17 @@ import SwordKit
 public final class SwordContentProvider: BibleReadingProvider, Sendable {
     public let id: BibleContentProviderID
     let library: SwordLibrary
+    let installer: SwordModuleInstaller?
 
     /// Creates a provider backed by an existing SwordKit library.
     public init(
         library: SwordLibrary,
-        id: BibleContentProviderID = BibleContentProviderID(rawValue: "sword")
+        id: BibleContentProviderID = BibleContentProviderID(rawValue: "sword"),
+        installer: SwordModuleInstaller? = nil
     ) {
         self.library = library
         self.id = id
+        self.installer = installer
     }
 
     /// Returns metadata for modules currently installed in the SWORD library.
@@ -119,7 +122,7 @@ public final class SwordContentProvider: BibleReadingProvider, Sendable {
         case .dictionary: .dictionary
         case .devotional: .devotional
         case .generalBook: .generalBook
-        case .other: .generalBook
+        case .other: .other
         }
     }
 
