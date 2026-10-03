@@ -6,7 +6,7 @@ import SwordKit
 /// This adapter is an optional product so the BibleKit core remains independent
 /// of the SWORD engine. Applications using this adapter must comply with the
 /// licensing terms of SwordKit, SWORD, and each installed module.
-public final class SwordContentProvider: BibleContentProvider, @unchecked Sendable {
+public final class SwordContentProvider: BibleReadingProvider, Sendable {
     public let id: BibleContentProviderID
     private let library: SwordLibrary
 
@@ -31,6 +31,53 @@ public final class SwordContentProvider: BibleContentProvider, @unchecked Sendab
                 version: module.version,
                 copyright: module.copyright
             )
+        }
+    }
+
+    /// Reads a Bible verse or a module-native dictionary, book, or devotional entry.
+    public func read(contentID: BibleContentID, at location: BibleReadingLocation) async throws -> BibleReadingContent {
+        try Task.checkCancellation()
+        guard let module = library.module(named: contentID.rawValue) else {
+            throw BibleReadingError.contentNotFound(contentID)
+        }
+        let descriptor = Self.descriptor(
+            providerID: id, moduleName: module.name, title: module.title,
+            language: module.language, category: module.category,
+            version: module.version, copyright: module.copyright
+        )
+        let task = Task.detached {
+            try Task.checkCancellation()
+            let resolved: BibleReadingLocation
+            let text: String
+            let html: String
+            switch location {
+            case .verse(let reference):
+                guard module.category == .bible else {
+                    throw BibleReadingError.unsupportedLocation(location)
+                }
+                let verse = try module.verse(reference)
+                resolved = .verse(verse.reference.value)
+                text = verse.text
+                html = try module.html(verse.reference.value)
+            case .keyedEntry(let key):
+                guard module.category.supportsKeyedEntries else {
+                    throw BibleReadingError.unsupportedLocation(location)
+                }
+                let entry = try module.keyedEntry(for: key)
+                resolved = .keyedEntry(entry.key)
+                text = entry.text
+                html = entry.html
+            }
+            try Task.checkCancellation()
+            return BibleReadingContent(
+                providerID: self.id, contentID: descriptor.contentID,
+                location: resolved, text: text, html: html, license: descriptor.license
+            )
+        }
+        return try await withTaskCancellationHandler {
+            try await task.value
+        } onCancel: {
+            task.cancel()
         }
     }
 
