@@ -8,7 +8,7 @@ import SwordKit
 /// licensing terms of SwordKit, SWORD, and each installed module.
 public final class SwordContentProvider: BibleReadingProvider, Sendable {
     public let id: BibleContentProviderID
-    private let library: SwordLibrary
+    let library: SwordLibrary
 
     /// Creates a provider backed by an existing SwordKit library.
     public init(
