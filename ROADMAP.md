@@ -35,6 +35,8 @@ the optional `BibleKitSword` product depends on SwordKit.
    - [x] Expose searching, navigation, and parallel chapter comparison.
    - [x] Local/remote catalog inspection, installation, removal, and refresh.
    - [x] User-selected archive installation for paired module delivery.
+   - [x] Opt-in real ASV integration coverage for reading, book navigation,
+     chapter fidelity, and scoped search; verified locally on macOS.
    - [ ] Make module lifecycle contracts reusable beyond the SWORD adapter;
      current repository/progress parameters remain SwordKit-specific.
 
@@ -48,7 +50,8 @@ the optional `BibleKitSword` product depends on SwordKit.
 5. Consumer integration
    - [ ] Merge the separately developed SwordReader service migration and validate
      macOS, iOS, and Watch behavior without losing existing offline/rich content.
-   - [ ] Document public provider/adapter usage and compatibility policy in full.
+   - [x] Document baseline provider/adapter usage, feed policy, integration checks,
+     and pre-1.0 compatibility policy. Future contracts require additional docs.
 
 ## Extraction ownership and sequence
 
